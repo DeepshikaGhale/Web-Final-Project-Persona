@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Post Journal";
+}
+
+<div class="border-style cover-width">
+
+    <h2>Add Entry</h2>
+
+    <!--add data to the list-->
+
+    <form asp-action="Add" method="post">
+        <!--For Title-->
+        <div style="margin-bottom:5%;">
+            <div style="display:flex;">
+                <label class="text-style item-text-style" for="journalName">Title</label>
+                <label style="color:red">*</label>
+            </div>
+            <input type="text" id="journalName" class="cover-width" name="JournalName" required />
+        </div>
+
+        <!--For Date-->
+        <div style="margin-bottom:5%;">
+            <div style="display:flex;">
+                <label class="text-style item-text-style" for="journalDate">Date</label>
+                <label style="color:red">*</label>
+            </div>
+            <input type="text" id="journalDate" class="cover-width" name="Date" required />
+        </div>
+
+        <!--For Description-->
+        <div style="margin-bottom:5%;">
+            <div style="display:flex;">
+                <label class="text-style item-text-style" for="description">Description</label>
+                <label style="color:red">*</label>
+            </div>
+            <textarea type="text" id="description" class="border-style cover-width" name="Description"></textarea>
+            <div class="error-message" id="errorParagraphInput"></div>
+        </div>
+
+        <!--For Submitting the form-->
+        <button class="submit-btn-border" type="submit">Submit</button>
+
+    </form>
+
+</div>  
+
+

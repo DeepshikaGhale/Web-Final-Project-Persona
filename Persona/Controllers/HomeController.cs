@@ -6,16 +6,8 @@ namespace Persona.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
-    {
-        _logger = logger;
-    }
-
-    public IActionResult Index()
-    {
-        List<JournalModel> journals = new List<JournalModel> {
+    //list of dummy journals
+    List<JournalModel> journals = new List<JournalModel> {
             new JournalModel{
                 JournalID = 1,
                 JournalName = "My First Journal",
@@ -33,6 +25,16 @@ public class HomeController : Controller
             }
         };
 
+    private readonly ILogger<HomeController> _logger; 
+
+    public HomeController(ILogger<HomeController> logger)
+    {
+        _logger = logger;
+    }
+
+    public IActionResult Index()
+    {
+        //passing the value of journals to the index page
         ViewBag.JournalModel = journals;
         return View();
     }
@@ -40,6 +42,37 @@ public class HomeController : Controller
     public IActionResult Login()
     {
         return View();
+    }
+
+    public IActionResult JournalDetails(int id)
+    {
+        var journal = journals.FirstOrDefault(j => j.JournalID == id);
+        if (journal == null)
+        {
+            return NotFound();
+        }
+        return View(journal);
+    }
+
+    public IActionResult PostJournal() {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult DeleteJournal(int id)
+    {
+        var journal = journals.FirstOrDefault(j => j.JournalID == id);
+
+        if (journal == null)
+        {
+            return NotFound();
+        }
+
+        //remove journal from the list
+        journals.Remove(journal);
+
+        //returning result in json format indicating the data has been deleted successfully
+        return Json(new { success = true, message = "Journal deleted successfully." });
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
