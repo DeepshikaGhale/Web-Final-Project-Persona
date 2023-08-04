@@ -1,9 +1,69 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿    @model Persona.Models.JournalModel
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    @{
+        ViewData["Title"] = "Home Page";
+        List<JournalModel> journals = ViewBag.JournalModel;
+    }
+
+    <div>
+        @{
+    /* This is the heading container of home controller */
+        }
+        <div>
+            <div style="display:flex; justify-content:space-between; ">
+                <a href="/Home/PostJournal" style="text-decoration:none;">
+                    <button class="custom-button">
+                        Create New Entry
+                     </button>
+                 </a>
+                
+                <div class="border-style">
+                    <label>
+                        Total Entries: @journals.Count
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        @{
+        /*
+        - This is the body container of the page,
+        - to display the list of journals
+        */
+        }
+
+        @foreach (JournalModel item in journals) {
+
+           
+                    <div class="list-container item-border-style">
+                        <a href="@Url.Action("JournalDetails", "Home", new { id = item.JournalID})" style="text-decoration:none;">
+
+                            <div style="display:flex; flex-direction:column; padding: 13px">
+                                <label class="text-style label-text-style">
+                                    @item.JournalName
+                                    </label>
+                                <label class="text-style item-text-style">
+                                    @item.Description
+                                </label>
+                            </div>
+                        </a>
+
+                            <div style="display:flex; flex-direction:column; justify-content:space-between">
+                                <div>
+                                    <button class="delete-button-style">
+                                        <img src="~/images/delete.png" alt="delete journal" height="25" />
+                                    </button>
+                                </div>
+                                <div>
+                                    <button class="edit-button-style">
+                                        <img src="~/images/edit.png" alt="edit journal" height="25" />
+                                    </button>
+                                </div>
+                            </div>
+                    </div>
+               
+                    }
+
+    </div>
+
 

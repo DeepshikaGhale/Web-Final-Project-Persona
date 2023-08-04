@@ -1,0 +1,68 @@
+﻿@model Persona.Models.JournalModel
+
+@{
+    ViewData["Title"] = "Journal Details";
+}
+
+<div>
+    <h2> Journal Details</h2>
+
+    @* display journal information *@
+    <div class="border-style cover-width"> 
+        <label class="text-style label-text-style">
+            @Model.JournalName
+        </label>
+        <p class="text-style item-text-style">
+            @Model.Description
+        </p>
+        <div style="display:flex; ">
+            <img src="~/images/sample_image.jpg" alt="@Model.JournalName Image" style="margin-right:10px; height:100px; width:200px"/>
+            <img src="~/images/sample_image.jpg" alt="@Model.JournalName Image" style="height:100px; width:200px"/>
+        </div>
+    </div>
+
+    @* delete and edit button*@
+    <div style="display:flex">
+
+        <button class="button-solid-border" onclick="onClickConfirmDelete(@Model.JournalID)">
+            <img src="~/images/delete.png" alt="delete journal" height="25" />
+        </button>
+
+        <button class="button-solid-border" onclick="onClickConfirmEdit(@Model.JournalID)>
+            <img src="~/images/edit.png" alt="edit journal" height="25" />
+        </button>
+    </div>
+
+</div>
+
+<!--Javascript function to handle the delete button on click call-->
+<script>
+ //Todo: resolve delete journal from journal details
+    function onClickConfirmDelete(journalID) {
+        if (confirm('Are you sure you want to delete this journal entry?')) {
+            //making AJAX request to delete the journal entity
+            fetch('/JournalDetails/DeleteJournal/1', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the response from the server.
+                    if (data.success) {
+                        alert('Journal with ID ' + journalID + ' has been deleted.');
+                        // Redirect the user to the home page after successful deletion.
+                        window.location.href = '/Home/Index';
+                    } else {
+                        alert('Error deleting journal: ' + data.message);
+                    }
+                }).catch(error => {
+                    alert('An error occurred while deleting the journal.');
+                    console.error(error);
+                });
+          
+        }
+    }
+
+    //edit the journal details
+    function onClickConfirmEdit(journalID) {
+
+    }
+</script>
+
