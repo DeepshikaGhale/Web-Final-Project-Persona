@@ -5,6 +5,8 @@ public class JournalModel
 {
 	public int JournalID { get; set; }
 
+	public String JournalName { get; set; } = "";
+
 	public String Description { get; set; } = "";
 
 	public String photo { get; set; } = "";

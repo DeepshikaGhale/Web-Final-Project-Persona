@@ -1,15 +1,56 @@
-﻿@{
+﻿@model Persona.Models.JournalModel
+
+@{
     ViewData["Title"] = "Home Page";
+    List<JournalModel> journals = ViewBag.JournalModel;
 }
 
-<div class="text-center">
-    <div style="width: 237px; height: 46px; flex-shrink: 0;">
-        <button class="custom-button">Create New Entry</button>
-        <div class="border-style">
-            <label>
-                Total Entries: 10
-            </label>
-       </div>
+<div>
+    @{
+/* This is the heading container of home controller */
+    }
+    <div>
+        <div style="display:flex; justify-content:space-between; ">
+            <button class="custom-button">Create New Entry</button>
+            <div class="border-style">
+                <label>
+                    Total Entries: 10
+                </label>
+            </div>
+        </div>
     </div>
+
+    @{
+/* This is the body container of the page */
+    }
+
+    @foreach (JournalModel item in journals) {
+            <div class="list-container item-border-style">
+
+                <div style="display:flex; flex-direction:column; padding: 13px">
+                    <label class="text-style label-text-style">
+                        @item.JournalName
+                    </label>
+                    <label class="text-style item-text-style">
+                        @item.Description
+                    </label>
+                </div>
+
+                <div style="display:flex; flex-direction:column; justify-content:space-between">
+                    <div>
+                        <button class="delete-button-style">
+                            <img src="~/images/delete.png" alt="delete journal" height="25" />
+                        </button>
+                    </div>
+                    <div>
+                        <button class="edit-button-style">
+                            <img src="~/images/edit.png" alt="edit journal" height="25" />
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    
 </div>
+
 

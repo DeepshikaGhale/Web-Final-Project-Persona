@@ -15,6 +15,25 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        List<JournalModel> journals = new List<JournalModel> {
+            new JournalModel{
+                JournalID = 1,
+                JournalName = "My First Journal",
+                Description = "This is my first journal entry.",
+                UserEnteredDate = DateTime.Now,
+                CreatedDate = DateTime.Now
+            },
+            new JournalModel
+            {
+                JournalID = 2,
+                JournalName = "Second Journal",
+                Description = "Another journal entry.",
+                UserEnteredDate = DateTime.Now.AddDays(-3),
+                CreatedDate = DateTime.Now.AddDays(-4)
+            }
+        };
+
+        ViewBag.JournalModel = journals;
         return View();
     }
 
