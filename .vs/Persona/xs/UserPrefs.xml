@@ -1,12 +1,25 @@
 ﻿<Properties StartupConfiguration="{278785FE-3985-46AC-9253-812F445E251D}|Default">
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.Persona PreferredExecutionTarget="/Applications/Safari.app" />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Persona/wwwroot/css/site.css">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/deepshikaghale/Documents/FInalProject/Web/Persona/Persona/Controllers/HomeController.cs" relfile="Persona/Controllers/HomeController.cs" line="72" column="1" />
+      <Breakpoint file="/Users/deepshikaghale/Documents/FInalProject/Web/Persona/Persona/Controllers/HomeController.cs" relfile="Persona/Controllers/HomeController.cs" line="77" column="1" />
+      <Breakpoint file="/Users/deepshikaghale/Documents/FInalProject/Web/Persona/Persona/Controllers/HomeController.cs" relfile="Persona/Controllers/HomeController.cs" line="92" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Persona PreferredExecutionTarget="/Applications/Safari.app" />
+  <MonoDevelop.Ide.ItemProperties.Persona.IntegrationTests FirstBuild="True" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Persona.IntegrationTests/PersonaIntegrationTest.cs">
     <Files>
-      <File FileName="Persona/Models/JournalModel.cs" Line="17" Column="1" />
-      <File FileName="Persona/Views/Shared/_Layout.cshtml.css" Line="48" Column="2" />
-      <File FileName="Persona/wwwroot/css/site.css" Line="32" Column="41" />
+      <File FileName="Persona/Controllers/HomeController.cs" Line="119" Column="1" />
+      <File FileName="Persona/Views/Home/JournalDetails.cshtml" />
+      <File FileName="Persona/Views/Home/PostJournal.cshtml" />
+      <File FileName="Persona/Program.cs" />
+      <File FileName="Persona/Views/Home/Index.cshtml" />
+      <File FileName="Persona.IntegrationTests/Usings.cs" />
+      <File FileName="Persona.IntegrationTests/PersonaIntegrationTest.cs" Line="12" Column="6" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -14,28 +27,16 @@
           <Node name="Persona" expanded="True">
             <Node name="Persona" expanded="True">
               <Node name="Controllers" expanded="True" />
-              <Node name="Models" expanded="True" />
-              <Node name="Views" expanded="True">
-                <Node name="Home" expanded="True" />
-                <Node name="Shared" expanded="True">
-                  <Node name="_Layout.cshtml" expanded="True" />
-                </Node>
-              </Node>
-              <Node name="wwwroot" expanded="True">
-                <Node name="css" expanded="True">
-                  <Node name="site.css" selected="True" />
-                </Node>
-                <Node name="js" expanded="True" />
-                <Node name="lib" expanded="True" />
-              </Node>
+            </Node>
+            <Node name="Persona.IntegrationTests" expanded="True">
+              <Node name="PersonaIntegrationTest.cs" selected="True" />
             </Node>
           </Node>
         </State>
       </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
 </Properties>

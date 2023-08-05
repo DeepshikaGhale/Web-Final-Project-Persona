@@ -1,8 +1,7 @@
-﻿    @model Persona.Models.JournalModel
+﻿    @model List<JournalModel>
 
     @{
         ViewData["Title"] = "Home Page";
-        List<JournalModel> journals = ViewBag.JournalModel;
     }
 
     <div>
@@ -19,7 +18,7 @@
                 
                 <div class="border-style">
                     <label>
-                        Total Entries: @journals.Count
+                        Total Entries: @Model.Count
                     </label>
                 </div>
             </div>
@@ -32,7 +31,7 @@
         */
         }
 
-        @foreach (JournalModel item in journals) {
+        @foreach (var item in Model) {
 
            
                     <div class="list-container item-border-style">
