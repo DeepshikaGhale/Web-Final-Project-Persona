@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Persona.Models;
 
@@ -35,8 +36,16 @@ public class HomeController : Controller
     public IActionResult Index()
     {
         //passing the value of journals to the index page
-        ViewBag.JournalModel = journals;
-        return View();
+        List<JournalModel> journals = GetLatestJournalList();
+        return View(journals);
+    }
+
+    // Get the latest list of journal entries from the static list
+    private List<JournalModel> GetLatestJournalList()
+    {
+        // In this example, we simply return the existing dummyJournals list.
+        // You can replace this with your own logic to fetch data from a database or other sources.
+        return journals;
     }
 
     public IActionResult Login()
@@ -56,6 +65,31 @@ public class HomeController : Controller
 
     public IActionResult PostJournal() {
         return View();
+    }
+
+    [HttpPost]
+    public IActionResult PostJournal(JournalModel journal)
+    {
+        journal.CreatedDate = DateTime.Now;
+        journal.UserEnteredDate = DateTime.Now;
+
+        // Perform any validation you need, for example:
+        if (string.IsNullOrEmpty(journal.JournalName) || string.IsNullOrEmpty(journal.Description))
+        {
+            ModelState.AddModelError("", "Journal Name and Description are required.");
+            return View(journal); // Return to the form with validation errors if necessary.
+        }
+
+        // Generate a unique JournalID (you might need to adjust this based on your data source).
+        int newJournalID = journals.Count + 1;
+        journal.JournalID = newJournalID;
+
+        // Add the new journal to the list.
+        journals.Add(journal);
+      
+
+        // Redirect back to the home page(assuming you have an 'Index' action in the 'HomeController').
+        return RedirectToAction("Index", journals);
     }
 
     [HttpPost]
