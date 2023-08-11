@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Persona.Models;
+using PersonaClassLibrary;
 
 namespace Persona.Controllers;
 
@@ -10,7 +11,7 @@ public class HomeController : Controller
     //list of dummy journals
     List<JournalModel> journals = new List<JournalModel> {
             new JournalModel{
-                JournalID = 1,
+                JournalId = 1,
                 JournalName = "My First Journal",
                 Description = "This is my first journal entry.",
                 UserEnteredDate = DateTime.Now,
@@ -18,7 +19,7 @@ public class HomeController : Controller
             },
             new JournalModel
             {
-                JournalID = 2,
+                JournalId = 2,
                 JournalName = "Second Journal",
                 Description = "Another journal entry.",
                 UserEnteredDate = DateTime.Now.AddDays(-3),
@@ -55,7 +56,7 @@ public class HomeController : Controller
 
     public IActionResult JournalDetails(int id)
     {
-        var journal = journals.FirstOrDefault(j => j.JournalID == id);
+        var journal = journals.FirstOrDefault(j => j.JournalId == id);
         if (journal == null)
         {
             return NotFound();
@@ -82,7 +83,7 @@ public class HomeController : Controller
 
         // Generate a unique JournalID (you might need to adjust this based on your data source).
         int newJournalID = journals.Count + 1;
-        journal.JournalID = newJournalID;
+        journal.JournalId = newJournalID;
 
         // Add the new journal to the list.
         journals.Add(journal);
@@ -95,7 +96,7 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult DeleteJournal(int id)
     {
-        var journal = journals.FirstOrDefault(j => j.JournalID == id);
+        var journal = journals.FirstOrDefault(j => j.JournalId == id);
 
         if (journal == null)
         {
