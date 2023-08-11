@@ -2,13 +2,13 @@
 
 public class JournalModel
 {
-    public int JournalID { get; set; }
+    public int JournalId { get; set; }
 
-    public String JournalName { get; set; } = "";
+    public string JournalName { get; set; } = "";
 
-    public String Description { get; set; } = "";
+    public string Description { get; set; } = "";
 
-    public String photo { get; set; } = "";
+    public string Photo { get; set; } = "";
 
     public DateTime? UserEnteredDate { get; set; }
 
