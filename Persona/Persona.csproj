@@ -18,4 +18,7 @@
     <None Include="wwwroot\images\delete.png" />
     <None Include="wwwroot\images\edit.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PersonaClassLibrary\PersonaClassLibrary.csproj" />
+  </ItemGroup>
 </Project>
