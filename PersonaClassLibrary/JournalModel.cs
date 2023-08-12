@@ -1,7 +1,10 @@
-﻿namespace PersonaClassLibrary;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace PersonaClassLibrary;
 
 public class JournalModel
 {
+    [Key]
     public int JournalId { get; set; }
 
     public string JournalName { get; set; } = "";

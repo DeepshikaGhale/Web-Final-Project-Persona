@@ -1,8 +1,17 @@
+
+
+using Microsoft.EntityFrameworkCore;
+using PersonaClassLibrary;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+builder.Services.AddDbContext<JournalDBContext>(opt =>
+    opt.UseSqlite("Data Source=/Users/deepshikaghale/Data/myJournalDB.db;"));
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
