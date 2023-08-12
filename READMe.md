@@ -29,6 +29,16 @@ For the first check-in, the following tasks have been completed:
 2. Implemented the `JournalModel` class as the data model for journal entries.
 3. Integrated MSUnit tests for integration testing with three test methods.
 
+## Progress - Check-In 2
+
+For the first check-in, the following tasks have been completed:
+
+1. Created Unit Test Project
+2. Created Web API and performed CRUD in it
+3. Added one test method in unit test but it does not work. I tried to test if the create method will return status code 200 when it
+    //adds data to dbcontext but it does not give positive response,
+    //i also tried using other methods of Assert class but it still does not work
+
 <!-- Add any additional information, images, or diagrams related to your project -->
 
 ## Getting Started
