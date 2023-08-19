@@ -49,14 +49,20 @@
 
                             <div style="display:flex; flex-direction:column; justify-content:space-between">
                                 <div>
-                                    <button class="delete-button-style">
-                                        <img src="~/images/delete.png" alt="delete journal" height="25" />
-                                    </button>
+                                    <form method="post" asp-action="Delete">
+                                        <!-- Include the item ID as a hidden input field -->
+                                            <input type="hidden" name="id" value="@item.JournalId">
+                                        <button class="delete-button-style">
+                                            <img src="~/images/delete.png" alt="delete journal" height="25"/>
+                                        </button>
+                                    </form>
                                 </div>
                                 <div>
-                                    <button class="edit-button-style">
-                                        <img src="~/images/edit.png" alt="edit journal" height="25" />
-                                    </button>
+                                    <a href="@Url.Action("Edit", "Home", new { id = item.JournalId})" style="text-decoration:none;">
+                                        <button class="edit-button-style">
+                                            <img src="~/images/edit.png" alt="edit journal" height="25" />
+                                        </button>
+                                    </a>
                                 </div>
                             </div>
                     </div>
