@@ -31,7 +31,7 @@ For the first check-in, the following tasks have been completed:
 
 ## Progress - Check-In 2
 
-For the first check-in, the following tasks have been completed:
+For the second check-in, the following tasks have been completed:
 
 1. Created Unit Test Project
 2. Created Web API and performed CRUD in it
@@ -39,6 +39,16 @@ For the first check-in, the following tasks have been completed:
     //adds data to dbcontext but it does not give positive response,
     //i also tried using other methods of Assert class but it still does not work
 
+## Progress - Check-In 3
+
+For the third check-in, the following tasks have been completed:
+
+1. Add test method to the Unit Test Project
+2. Added identity framework partially to the project.
+3. Performed CRUD from web application
+4. Integrated persona Web API to the web application.
+6. Added three more test method in unit test. Only two unit test works out of four unit tests. I tried to test if the get method will work but it didn't well.
+    
 <!-- Add any additional information, images, or diagrams related to your project -->
 
 ## Getting Started
