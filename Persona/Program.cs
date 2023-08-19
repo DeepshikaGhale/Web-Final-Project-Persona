@@ -1,6 +1,15 @@
-﻿using Persona;
+using Persona;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Persona.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<PersonaAuth>(options =>
+    options.UseSqlite("Data Source=/Users/deepshikaghale/Data/myUserDB.db;"));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<PersonaAuth>();
 
 // Add services to the container.
 //setup api
@@ -27,6 +36,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();;
 
 app.UseAuthorization();
 
