@@ -1,6 +1,16 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using Persona;
+
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+//setup api
+builder.Services.AddHttpClient(
+    "PersonaAPIClient",
+    (client) =>{
+        client.BaseAddress = new Uri("https://localhost:7022/");
+}
+);
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

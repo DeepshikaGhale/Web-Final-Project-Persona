@@ -1,48 +1,63 @@
+@using PersonaClassLibrary
+@model PersonaClassLibrary.JournalModel
+
 @{
     ViewData["Title"] = "Edit Journal";
+
+    var journalName = @Model.JournalName;
+    var journalDescription = @Model.Description;
+    var jounalDate = @Model.UserEnteredDate;
+    var id = @Model.JournalId;
 }
 
 <div class="border-style cover-width">
 
-    <h2>Add Entry</h2>
+    <h2>Edit Entry</h2>
 
     <!--add data to the list-->
 
-    <form asp-action="EditJournal" method="post">
+    <form asp-action="Edit" method="post">
+        <!--For ID-->
+        <input type="text" asp-for="JournalId" value="@id" class="cover-width" readonly style="display: none"/>
+
         <!--For Title-->
         <div style="margin-bottom:5%;">
             <div style="display:flex;">
-                <label class="text-style item-text-style" asp-for="journalName">Title</label>
+                <label class="text-style item-text-style" asp-for="JournalName">Title</label>
                 <label style="color:red">*</label>
             </div>
-            <input type="text" asp-for="journalName" class="cover-width" name="JournalName" required />
-       
-            <span asp-validation-for="journalName" class="text-danger"></span>
+            <input type="text" asp-for="JournalName" value="@journalName" class="cover-width" required/>
+            <span asp-validation-for="JournalName" class="text-danger"></span>
         </div>
 
         <!--For Date-->
         <div style="margin-bottom:5%;">
             <div style="display:flex;">
-                <label class="text-style item-text-style" asp-for="journalDate">Date</label>
+                <label class="text-style item-text-style" asp-for="UserEnteredDate">Date</label>
                 <label style="color:red">*</label>
             </div>
-            <input type="text" asp-for="journalDate" class="cover-width" name="Date" required />
-            <span asp-validation-for="journalDate" class="text-danger"></span>
-
+            <input type="text" asp-for="UserEnteredDate" value="@jounalDate" class="cover-width" required/>
+            <span asp-validation-for="UserEnteredDate" class="text-danger"></span>
         </div>
 
         <!--For Description-->
         <div style="margin-bottom:5%;">
             <div style="display:flex;">
-                <label class="text-style item-text-style" asp-for="description">Description</label>
+                <label class="text-style item-text-style" asp-for="Description">Description</label>
                 <label style="color:red">*</label>
             </div>
-            <textarea type="text" asp-for="description" class="border-style cover-width" name="Description"></textarea>
+            <textarea asp-for="Description" class="border-style cover-width" required>
+    @journalDescription</textarea>
             <div class="error-message" id="errorParagraphInput"></div>
         </div>
 
+
         <!--For Submitting the form-->
-        <button class="submit-btn-border" type="submit">Submit</button>
+        <button class="submit-btn-border" type="submit">Update</button>
     </form>
 
-</div>
+</div> 
+
+
+
+

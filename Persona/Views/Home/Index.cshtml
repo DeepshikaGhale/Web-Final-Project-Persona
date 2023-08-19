@@ -49,14 +49,19 @@
 
                             <div style="display:flex; flex-direction:column; justify-content:space-between">
                                 <div>
-                                    <button class="delete-button-style">
-                                        <img src="~/images/delete.png" alt="delete journal" height="25" />
-                                    </button>
+                                   <a href="@Url.Action("Delete", "Home", new { id = item.JournalId})" style="text-decoration:none;">
+
+                                        <button class="delete-button-style">
+                                        <img src="~/images/delete.png" alt="delete journal" height="25"  />
+                                        </button>
+                                    </a>
                                 </div>
                                 <div>
-                                    <button class="edit-button-style">
-                                        <img src="~/images/edit.png" alt="edit journal" height="25" />
-                                    </button>
+                                    <a href="@Url.Action("Edit", "Home", new { id = item.JournalId})" style="text-decoration:none;">
+                                        <button class="edit-button-style">
+                                            <img src="~/images/edit.png" alt="edit journal" height="25" />
+                                        </button>
+                                    </a>
                                 </div>
                             </div>
                     </div>

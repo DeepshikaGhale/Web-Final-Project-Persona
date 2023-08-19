@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
 using Persona.Models;
 using PersonaClassLibrary;
@@ -7,95 +10,103 @@ using PersonaClassLibrary;
 namespace Persona.Controllers;
 
 public class HomeController : Controller
-{
-    //list of dummy journals
-    List<JournalModel> journals = new List<JournalModel> {
-            new JournalModel{
-                JournalId = 1,
-                JournalName = "My First Journal",
-                Description = "This is my first journal entry.",
-                UserEnteredDate = DateTime.Now,
-                CreatedDate = DateTime.Now
-            },
-            new JournalModel
-            {
-                JournalId = 2,
-                JournalName = "Second Journal",
-                Description = "Another journal entry.",
-                UserEnteredDate = DateTime.Now.AddDays(-3),
-                CreatedDate = DateTime.Now.AddDays(-4)
-            }
-        };
+{   
+    //api setup
+    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly HttpClient _httpClient;
 
     private readonly ILogger<HomeController> _logger; 
+    
+    //variable to store id
+    int JournalID = 0;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(IHttpClientFactory httpClientFactory)
     {
-        _logger = logger;
+        _httpClientFactory = httpClientFactory;
+        _httpClient = _httpClientFactory.CreateClient("PersonaAPIClient");
     }
-
-    public IActionResult Index()
+    
+    //dashboard
+    public async Task<IActionResult> Index()
     {
         //passing the value of journals to the index page
-        List<JournalModel> journals = GetLatestJournalList();
-        return View(journals);
+        var response = await _httpClient.GetAsync("api/Journal");
+        var journalList = await response.Content.ReadFromJsonAsync<List<JournalModel>>();
+        return View(journalList);
     }
-
-    // Get the latest list of journal entries from the static list
-    private List<JournalModel> GetLatestJournalList()
-    {
-        // In this example, we simply return the existing dummyJournals list.
-        // You can replace this with your own logic to fetch data from a database or other sources.
-        return journals;
-    }
-
+    
     public IActionResult Login()
     {
         return View();
     }
-
-    public IActionResult JournalDetails(int id)
+    
+    //details screen
+    public async Task<IActionResult> JournalDetails(int id)
     {
-        var journal = journals.FirstOrDefault(j => j.JournalId == id);
-        if (journal == null)
+        
+        var response = await _httpClient.GetAsync($"api/Journal/{id}");
+        var journalDetails = await response.Content.ReadFromJsonAsync<JournalModel>();
+       
+        if (journalDetails == null)
         {
             return NotFound();
         }
-        return View(journal);
+        return View(journalDetails);
     }
-
-    public IActionResult PostJournal() {
-        return View();
-    }
-
-    [HttpPost]
-    public IActionResult PostJournal(JournalModel journal)
+    
+    //create journal
+    [HttpGet]
+    public IActionResult PostJournal()
     {
+        JournalModel journalModel = new JournalModel();
+        return View(journalModel);
+    }
+
+    //create journal 
+    [HttpPost]
+    public async Task<IActionResult> PostJournal(JournalModel journal)
+    {
+        //do the API Create Action and send the control to Index Action
         journal.CreatedDate = DateTime.Now;
         journal.UserEnteredDate = DateTime.Now;
-
+        
         // Perform any validation you need, for example:
         if (string.IsNullOrEmpty(journal.JournalName) || string.IsNullOrEmpty(journal.Description))
         {
             ModelState.AddModelError("", "Journal Name and Description are required.");
             return View(journal); // Return to the form with validation errors if necessary.
         }
+        
+        var json = JsonSerializer.Serialize(journal);
+        
+        var response = await _httpClient.PostAsync(
+            $"api/Journal/", 
+            new StringContent(json, Encoding.UTF8, "application/json"));
 
-        // Generate a unique JournalID (you might need to adjust this based on your data source).
-        int newJournalID = journals.Count + 1;
-        journal.JournalId = newJournalID;
+        if (response.IsSuccessStatusCode)
+        {
+            var result = response.Content.ReadAsStringAsync().Result;
+            var data = JsonSerializer.Deserialize<JournalModel>(result);
+            if (data != null)
+            {
+                var journalData = data;
+            }
+        }
+        else
+        {
+                var result = response.Content.ReadAsStringAsync().Result;
+                throw new Exception("error" + result);
 
-        // Add the new journal to the list.
-        journals.Add(journal);
-      
-
+        }
         // Redirect back to the home page(assuming you have an 'Index' action in the 'HomeController').
-        return RedirectToAction("Index", journals);
+        return RedirectToAction("Index", journal);
     }
 
-    [HttpPost]
+    [HttpGet]
     public IActionResult DeleteJournal(int id)
     {
+        JournalModel journalModel = new JournalModel();
+        /*
         var journal = journals.FirstOrDefault(j => j.JournalId == id);
 
         if (journal == null)
@@ -105,11 +116,64 @@ public class HomeController : Controller
 
         //remove journal from the list
         journals.Remove(journal);
-
+        */
         //returning result in json format indicating the data has been deleted successfully
         return Json(new { success = true, message = "Journal deleted successfully." });
+       //return View(journalModel);
     }
 
+    [HttpPost]
+    public IActionResult Delete(JournalModel journalModel)
+    {
+        return RedirectToAction("Index");
+    }
+
+    //edit
+    [HttpGet]
+    public async Task<IActionResult> Edit(int id)
+    {
+        JournalID = id;
+        var response = await _httpClient.GetAsync($"api/Journal/{id}");
+        var journalDetails = await response.Content.ReadFromJsonAsync<JournalModel>();
+       
+        if (journalDetails == null)
+        {
+            return NotFound();
+        }
+        //fetch the journal modal data from the api and show the journal details in the Edit view
+        return View(journalDetails);
+    }
+    
+    //edit
+    [HttpPost]
+    public async Task<IActionResult> Edit(JournalModel journal)
+    {
+        var id = journal.JournalId;
+        
+        // Perform any validation you need, for example:
+        if (string.IsNullOrEmpty(journal.JournalName) || string.IsNullOrEmpty(journal.Description))
+        {
+            ModelState.AddModelError("", "Journal Name and Description are required.");
+            return View(journal); // Return to the form with validation errors if necessary.
+        }
+        
+        var json = JsonSerializer.Serialize(journal);
+        
+        var response = await _httpClient.PutAsync(
+            $"api/Journal/{id}", 
+            new StringContent(json, Encoding.UTF8, "application/json"));
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var result = response.Content.ReadAsStringAsync().Result;
+            throw new Exception("error" + result);
+
+        }
+
+        // Redirect back to the home page(assuming you have an 'Index' action in the 'HomeController').
+        return RedirectToAction("Index", journal);
+    }
+    
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
