@@ -23,7 +23,7 @@ public class JournalController : Controller
     
     // GET: by id
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<JournalModel>> GetJournal(int id)
+    public async Task<ActionResult<JournalModel>> GetJournalById(int id)
     {
         var journal = await _context.JournalList.FindAsync(id);
 

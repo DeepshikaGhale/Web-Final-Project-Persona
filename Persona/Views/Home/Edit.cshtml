@@ -1,0 +1,48 @@
+@{
+    ViewData["Title"] = "Edit Journal";
+}
+
+<div class="border-style cover-width">
+
+    <h2>Add Entry</h2>
+
+    <!--add data to the list-->
+
+    <form asp-action="EditJournal" method="post">
+        <!--For Title-->
+        <div style="margin-bottom:5%;">
+            <div style="display:flex;">
+                <label class="text-style item-text-style" asp-for="journalName">Title</label>
+                <label style="color:red">*</label>
+            </div>
+            <input type="text" asp-for="journalName" class="cover-width" name="JournalName" required />
+       
+            <span asp-validation-for="journalName" class="text-danger"></span>
+        </div>
+
+        <!--For Date-->
+        <div style="margin-bottom:5%;">
+            <div style="display:flex;">
+                <label class="text-style item-text-style" asp-for="journalDate">Date</label>
+                <label style="color:red">*</label>
+            </div>
+            <input type="text" asp-for="journalDate" class="cover-width" name="Date" required />
+            <span asp-validation-for="journalDate" class="text-danger"></span>
+
+        </div>
+
+        <!--For Description-->
+        <div style="margin-bottom:5%;">
+            <div style="display:flex;">
+                <label class="text-style item-text-style" asp-for="description">Description</label>
+                <label style="color:red">*</label>
+            </div>
+            <textarea type="text" asp-for="description" class="border-style cover-width" name="Description"></textarea>
+            <div class="error-message" id="errorParagraphInput"></div>
+        </div>
+
+        <!--For Submitting the form-->
+        <button class="submit-btn-border" type="submit">Submit</button>
+    </form>
+
+</div>
