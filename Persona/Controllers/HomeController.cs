@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
 using Persona.Models;
 using PersonaClassLibrary;
@@ -43,7 +42,6 @@ public class HomeController : Controller
     //details screen
     public async Task<IActionResult> JournalDetails(int id)
     {
-        
         var response = await _httpClient.GetAsync($"api/Journal/{id}");
         var journalDetails = await response.Content.ReadFromJsonAsync<JournalModel>();
        
@@ -103,9 +101,10 @@ public class HomeController : Controller
     }
 
     [HttpGet]
-    public IActionResult DeleteJournal(int id)
+    public  IActionResult DeleteJournal(int id)
     {
-        JournalModel journalModel = new JournalModel();
+       
+        
         /*
         var journal = journals.FirstOrDefault(j => j.JournalId == id);
 
@@ -123,8 +122,17 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult Delete(JournalModel journalModel)
+    public async Task<IActionResult> Delete(int id)
     {
+        var response = await _httpClient.DeleteAsync($"api/Journal/{id}");
+        if (!response.IsSuccessStatusCode)
+        {
+            var result = response.Content.ReadAsStringAsync().Result;
+            throw new Exception("error" + result);
+        }
+        
+        //var script = "alert('Item deleted successfully');";
+        //return Content(script, "application/javascript");
         return RedirectToAction("Index");
     }
 
